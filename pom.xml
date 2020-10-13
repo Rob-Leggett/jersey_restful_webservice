@@ -12,7 +12,7 @@
 		<genson.version>0.98</genson.version>
 		<eclipselink.version>2.5.2-M1</eclipselink.version>
 		<derby.version>10.14.2.0</derby.version>
-		<junit.version>4.8.2</junit.version>
+		<junit.version>4.13.1</junit.version>
 		<mockito.version>1.9.5</mockito.version>
 	</properties>
 
