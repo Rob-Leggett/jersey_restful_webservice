@@ -8,7 +8,7 @@
 	<name>jersey_restful_webservice Jersey Webapp</name>
 
 	<properties>
-		<jersey.version>2.6</jersey.version>
+		<jersey.version>2.46</jersey.version>
 		<genson.version>0.98</genson.version>
 		<eclipselink.version>2.5.2-M1</eclipselink.version>
 		<derby.version>10.14.2.0</derby.version>
