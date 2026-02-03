@@ -1,52 +1,58 @@
 package au.com.example.api;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
-import javax.inject.Singleton;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.Application;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.inject.Singleton;
+import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.core.Application;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import org.glassfish.hk2.api.Factory;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
-import org.junit.Test;
-import org.mockito.Mock;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 import au.com.example.api.data.Customer;
 import au.com.example.service.CustomerService;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CustomerResourceTest extends JerseyTest {
 
-	@Mock
-	private CustomerService serviceMock;
+	private static CustomerService serviceMock = Mockito.mock(CustomerService.class);
 
-	/**
-	 * This is executed only once, not before each test.
-	 * 
-	 * This will enable Mockito Annotations to be used.
-	 * This will enable log traffic and message dumping.
-	 * This will register the Injectable Provider to the ResourceConfiguration which will
-	 * allow for the mock objects and jersey test to be linked.
-	 */
 	@Override
 	protected Application configure() {
-		MockitoAnnotations.initMocks(this);
-		
-		enable(TestProperties.LOG_TRAFFIC);
-		enable(TestProperties.DUMP_ENTITY);
+		forceSet(TestProperties.CONTAINER_PORT, "0");
 		
 		ResourceConfig config = new ResourceConfig(CustomerResource.class);
 		config.register(new InjectableProvider());
 
 		return config;
+	}
+
+	@BeforeAll
+	public void setUpTest() throws Exception {
+		super.setUp();
+	}
+
+	@AfterAll
+	public void tearDownTest() throws Exception {
+		super.tearDown();
+	}
+
+	@BeforeEach
+	public void resetMocks() {
+		Mockito.reset(serviceMock);
 	}
 
 	/**
@@ -73,11 +79,9 @@ public class CustomerResourceTest extends JerseyTest {
     @Test
     public void testCustomerDeleteResponse() {
 
-        Entity<Long> customerId = Entity.entity(getMockCustomer().getId(), MediaType.APPLICATION_JSON_TYPE);
+        doNothing().when(serviceMock).delete(Mockito.anyLong());
 
-        doNothing().when(serviceMock).save(Mockito.any(Customer.class));
-
-        Response response = target("customer/delete").request().post(customerId);
+        Response response = target("customer/1").request().delete();
 
         assertEquals(200, response.getStatus());
         assertEquals("customer has been successfully deleted", response.readEntity(String.class));
@@ -116,14 +120,10 @@ public class CustomerResourceTest extends JerseyTest {
 	}
 
 	/**
-	 * Create an Injectable Provider that with bind this factory to the customer service.
-	 * When the provide is invoked a mock service object will be returned.
-	 * When dispose is invoked the mock service object will be assigned null.
-	 * 
-	 * @author Robert Leggett
-	 *
+	 * Create an Injectable Provider that binds this factory to the customer service.
+	 * When provide is invoked a mock service object will be returned.
 	 */
-	class InjectableProvider extends AbstractBinder implements Factory<CustomerService> {
+	static class InjectableProvider extends AbstractBinder implements Factory<CustomerService> {
 		
 		@Override
 		protected void configure() {
@@ -135,7 +135,7 @@ public class CustomerResourceTest extends JerseyTest {
 		}
 
 		public void dispose(CustomerService service) {
-			serviceMock = null;
+			// no-op
 		}
 	}
 }

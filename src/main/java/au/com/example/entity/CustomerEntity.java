@@ -2,7 +2,7 @@ package au.com.example.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Customer")

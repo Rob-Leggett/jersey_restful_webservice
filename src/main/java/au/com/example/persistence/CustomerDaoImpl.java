@@ -1,15 +1,20 @@
 package au.com.example.persistence;
 
-import javax.inject.Singleton;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import jakarta.inject.Singleton;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import au.com.example.entity.CustomerEntity;
 
 @Singleton
 public class CustomerDaoImpl implements CustomerDao {
+
+	private static final Logger logger = LoggerFactory.getLogger(CustomerDaoImpl.class);
 
 	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("persist-unit");
 	
@@ -38,7 +43,7 @@ public class CustomerDaoImpl implements CustomerDao {
             CustomerEntity entity = em.find(CustomerEntity.class, id);
 
             if(entity == null) {
-                System.out.println("Error Deleting Customer: Customer not found");
+                logger.warn("Error Deleting Customer: Customer not found");
             }
             else {
                 em.remove(entity);
@@ -46,7 +51,7 @@ public class CustomerDaoImpl implements CustomerDao {
 
             transaction.commit();
         } catch (Exception e) {
-            System.out.println("Error Deleting Customer: " + e.getMessage());
+            logger.error("Error Deleting Customer: {}", e.getMessage());
 
             transaction.rollback();
         } finally {
@@ -66,7 +71,7 @@ public class CustomerDaoImpl implements CustomerDao {
 
 			transaction.commit();
 		} catch (Exception e) {
-			System.out.println("Error Saving Customer: " + e.getMessage());
+			logger.error("Error Saving Customer: {}", e.getMessage());
 
 			transaction.rollback();
 		} finally {

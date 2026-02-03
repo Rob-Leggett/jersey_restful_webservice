@@ -1,7 +1,7 @@
 package au.com.example.service;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 import au.com.example.api.data.Customer;
 import au.com.example.entity.CustomerEntity;
