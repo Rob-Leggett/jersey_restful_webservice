@@ -1,6 +1,6 @@
 # Jersey RESTful Web Service
 
-[![CI](https://github.com/Rob-Leggett/jersey_restful_webservice/actions/workflows/ci.yml/badge.svg)](https://github.com/Rob-Leggett/jersey_restful_webservice/actions/workflows/ci.yml)
+[![CI](https://github.com/Rob-Leggett/jersey_restful_webservice/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/Rob-Leggett/jersey_restful_webservice/actions/workflows/ci.yml) [![License](https://img.shields.io/github/license/Rob-Leggett/jersey_restful_webservice)](LICENSE) [![Java 25](https://img.shields.io/badge/Java-25-ED8B00?logo=openjdk&logoColor=white)](https://openjdk.org/projects/jdk/25/) [![Jersey 4.0](https://img.shields.io/badge/Jersey-4.0-F5A623)](https://eclipse-ee4j.github.io/jersey/)
 
 A modern RESTful Web Service using Jersey 4.0 (Jakarta EE 11) with Jakarta Persistence 3.2 implemented using EclipseLink 5.0 and an H2 in-memory database.
 
