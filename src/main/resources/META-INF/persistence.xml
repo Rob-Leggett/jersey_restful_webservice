@@ -1,7 +1,7 @@
 <persistence xmlns="https://jakarta.ee/xml/ns/persistence"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
-	version="3.0">
+	xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_2.xsd"
+	version="3.2">
 
 	<persistence-unit name="persist-unit" transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
@@ -10,8 +10,9 @@
 
 	    <properties>
 	        <!-- Provider-specific connection properties -->
-	        <property name="jakarta.persistence.jdbc.url" value="jdbc:derby:memory:exampleDB;create=true"/>
-	        <property name="jakarta.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
+	        <!-- MODE=LEGACY: EclipseLink's H2Platform reads identity keys via IDENTITY(), which H2 2.x only provides in legacy mode -->
+	        <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:mem:exampleDB;DB_CLOSE_DELAY=-1;MODE=LEGACY"/>
+	        <property name="jakarta.persistence.jdbc.driver" value="org.h2.Driver"/>
 	        <property name="jakarta.persistence.jdbc.user" value=""/>
 	        <property name="jakarta.persistence.jdbc.password" value=""/>
 

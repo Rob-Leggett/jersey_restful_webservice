@@ -2,33 +2,34 @@
 
 [![CI](https://github.com/Rob-Leggett/jersey_restful_webservice/actions/workflows/ci.yml/badge.svg)](https://github.com/Rob-Leggett/jersey_restful_webservice/actions/workflows/ci.yml)
 
-A modern RESTful Web Service using Jersey 4.0 (Jakarta EE 11) with JPA 3.0 implemented using EclipseLink 4.0 and Derby In-Memory Database.
+A modern RESTful Web Service using Jersey 4.0 (Jakarta EE 11) with Jakarta Persistence 3.2 implemented using EclipseLink 5.0 and an H2 in-memory database.
 
 ## Technology Stack
 
 | Technology | Version | Description |
 |------------|---------|-------------|
-| Java | 21+ | Language runtime |
-| Jersey | 4.0.0 | Jakarta RESTful Web Services (JAX-RS) implementation |
-| EclipseLink | 4.0.2 | Jakarta Persistence (JPA) implementation |
-| Derby | 10.16.1.1 | In-memory database |
-| JUnit | 5.10.1 | Testing framework |
-| Mockito | 5.6.0 | Mocking framework |
-| SLF4J | 2.0.9 | Logging facade |
+| Java | 25+ | Language runtime |
+| Jersey | 4.0.3 | Jakarta RESTful Web Services (JAX-RS) implementation |
+| EclipseLink | 5.0.2 | Jakarta Persistence (JPA) implementation |
+| H2 | 2.5.252 | In-memory database |
+| JUnit | 6.1.3 | Testing framework |
+| Mockito | 5.24.0 | Mocking framework |
+| SLF4J | 2.0.20 |
+| Jetty (dev server) | 12.1.14 | Local servlet container via `jetty-ee11-maven-plugin` | Logging facade |
 
 ## Features
 
 - **RESTful API** - Full CRUD operations for Customer resources
 - **Jakarta EE 11** - Modern Jakarta namespace (`jakarta.*`)
 - **JPA Persistence** - Entity management with EclipseLink
-- **In-Memory Database** - Derby for easy development and testing
+- **In-Memory Database** - H2 for easy development and testing
 - **Unit Tests** - Jersey Test Framework with Mockito mocking
 - **CI/CD** - GitHub Actions for automated builds
 
 ## Prerequisites
 
-- Java 21 or higher
-- Maven 3.8+
+- Java 25 or higher
+- Maven 3.9+
 
 ## Building
 
@@ -44,7 +45,13 @@ mvn test
 
 ## Running
 
-Deploy the generated `target/jrws.war` to any Jakarta EE compatible servlet container (Tomcat 10+, Jetty 12+, etc.).
+Run locally with the embedded Jetty plugin:
+
+```bash
+mvn jetty:run
+```
+
+Or deploy the generated `target/jrws.war` to any Jakarta EE 11 compatible servlet container (Tomcat 11+, Jetty 12.1+ with EE11, etc.).
 
 Ensure the context root is set to `jrws` and the web server port is `8080` (for example purposes).
 

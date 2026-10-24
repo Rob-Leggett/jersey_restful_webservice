@@ -53,7 +53,9 @@ public class CustomerDaoImpl implements CustomerDao {
         } catch (Exception e) {
             logger.error("Error Deleting Customer: {}", e.getMessage());
 
-            transaction.rollback();
+            if (transaction.isActive()) {
+            	transaction.rollback();
+            }
         } finally {
             em.close();
         }
@@ -73,7 +75,9 @@ public class CustomerDaoImpl implements CustomerDao {
 		} catch (Exception e) {
 			logger.error("Error Saving Customer: {}", e.getMessage());
 
-			transaction.rollback();
+			if (transaction.isActive()) {
+				transaction.rollback();
+			}
 		} finally {
 			em.close();
 		}
